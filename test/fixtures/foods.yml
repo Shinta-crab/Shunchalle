@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  food_name: MyString
+  category: one
+  start_week: 1
+  end_week: 1
+  most_product_week: 1
+  is_rare: false
+  image: MyString
+  recommend_week: 1
+
+two:
+  food_name: MyString
+  category: two
+  start_week: 1
+  end_week: 1
+  most_product_week: 1
+  is_rare: false
+  image: MyString
+  recommend_week: 1
