@@ -1,5 +1,14 @@
 # db/seeds.rb
 
+# まずカテゴリがなければ作成
+categories = [
+  { category_name: "野菜", icon: "icons/vegetable.png" },
+  { category_name: "魚介", icon: "icons/seafoods.png" },
+  { category_name: "果物", icon: "icons/fruits.png" }
+]
+Category.upsert_all(categories)  # ない場合は新規挿入、既にある場合は更新
+
+
 foods = [
   { food_name: "大根", category_id: 1, start_week: 48, end_week: 8, most_product_week: 2, is_rare: false, image: "", recommend_week: nil },
   { food_name: "白菜", category_id: 1, start_week: 48, end_week: 8, most_product_week: 3, is_rare: false, image: "", recommend_week: nil },
@@ -55,7 +64,6 @@ foods = [
   { food_name: "キウイ", category_id: 3, start_week: 24, end_week: 32, most_product_week: 28, is_rare: false, image: "", recommend_week: nil },
   { food_name: "ナツメ", category_id: 1, start_week: 26, end_week: 32, most_product_week: 30, is_rare: true, image: "https://media.delishkitchen.tv/article/2529/14ae5ai80e1h.jpeg?version=1751434212", recommend_week: 26 },
   { food_name: "ハモ", category_id: 2, start_week: 26, end_week: 32, most_product_week: 30, is_rare: true, image: "https://kappo-aun.jp/wp-content/uploads/2020/06/AdobeStock_87191418-592x410.jpeg", recommend_week: 27 },
-  { food_name: "サンマ", category_id: 2, start_week: 28, end_week: 34, most_product_week: 32, is_rare: false, image: "", recommend_week: nil },
   { food_name: "カツオ", category_id: 2, start_week: 24, end_week: 32, most_product_week: 28, is_rare: false, image: "", recommend_week: nil },
   { food_name: "マグロ", category_id: 2, start_week: 24, end_week: 34, most_product_week: 30, is_rare: false, image: "", recommend_week: nil },
   { food_name: "イサキ", category_id: 2, start_week: 22, end_week: 30, most_product_week: 26, is_rare: true, image: "https://video.kurashiru.com/production/articles/463bca99-8f99-4368-bccd-4ff669be6f6b/wide_thumbnail_normal.jpg?1723017220", recommend_week: 22 },
@@ -64,7 +72,6 @@ foods = [
   { food_name: "ミズダコ", category_id: 2, start_week: 49, end_week: 5, most_product_week: 2, is_rare: false, image: "", recommend_week: nil },
   { food_name: "サツマイモ", category_id: 1, start_week: 36, end_week: 47, most_product_week: 40, is_rare: false, image: "", recommend_week: nil },
   { food_name: "かぼちゃ", category_id: 1, start_week: 36, end_week: 46, most_product_week: 40, is_rare: false, image: "", recommend_week: nil },
-  { food_name: "長ネギ", category_id: 1, start_week: 36, end_week: 47, most_product_week: 40, is_rare: false, image: "", recommend_week: nil },
   { food_name: "しめじ", category_id: 1, start_week: 36, end_week: 46, most_product_week: 40, is_rare: false, image: "", recommend_week: nil },
   { food_name: "えのき茸", category_id: 1, start_week: 36, end_week: 46, most_product_week: 40, is_rare: false, image: "", recommend_week: nil },
   { food_name: "まいたけ", category_id: 1, start_week: 36, end_week: 46, most_product_week: 40, is_rare: false, image: "", recommend_week: nil },
@@ -98,7 +105,7 @@ foods = [
   { food_name: "イシダイ", category_id: 2, start_week: 36, end_week: 44, most_product_week: 40, is_rare: true, image: "", recommend_week: nil },
   { food_name: "アマダイ", category_id: 2, start_week: 36, end_week: 44, most_product_week: 40, is_rare: true, image: "", recommend_week: nil },
   { food_name: "アオリイカ", category_id: 2, start_week: 36, end_week: 44, most_product_week: 40, is_rare: false, image: "", recommend_week: nil },
-  { food_name: "スズキ", category_id: 2, start_week: 36, end_week: 44, most_product_week: 40, is_rare: true, image: "", recommend_week: nil }
+  { food_name: "スズキ", category_id: 2, start_week: 36, end_week: 44, most_product_week: 40, is_rare: true, image: "", recommend_week: nil },
   { food_name: "セリ", category_id: 1, start_week: 1, end_week: 5, most_product_week: 3, is_rare: true, image: "https://hyoki.jp/cms/wp-content/uploads/2017/02/pixta_15450193_M.jpg", recommend_week: 1 },
   { food_name: "ハマグリ", category_id: 2, start_week: 2, end_week: 6, most_product_week: 3, is_rare: false, image: "", recommend_week: nil },
   { food_name: "キンメダイ", category_id: 2, start_week: 3, end_week: 5, most_product_week: 4, is_rare: true, image: "https://www.kamaboko.com/assets/shohin/img/agetai_column_01.jpg", recommend_week: 4 },
@@ -137,12 +144,13 @@ foods = [
   { food_name: "タラの芽", category_id: 1, start_week: 15, end_week: 20, most_product_week: 16, is_rare: true, image: "https://media.delishkitchen.tv/article/2805/58w5sf15r8r.jpg?version=1749458913", recommend_week: 16 },
   { food_name: "ハスカップ", category_id: 3, start_week: 28, end_week: 33, most_product_week: 29, is_rare: true, image: "https://agri.mynavi.jp/wp-content/uploads/2020/07/0889eb20dfa61af23be0327a7277cc28.jpg", recommend_week: 29 },
   { food_name: "行者ニンニク", category_id: 1, start_week: 4, end_week: 16, most_product_week: 10, is_rare: true, image: "https://www.saihok.jp/hokkaido/wp-content/uploads/2018/05/DSC06925.jpg", recommend_week: 6 },
-  { food_name: "ヤブカンゾウ", category_id: 1, start_week: 8, end_week: 14, most_product_week: 10, is_rare: true, image: "https://syonai-hakusan.cocolog-nifty.com/photos/uncategorized/2009/04/10/h_030.jpg", recommend_week: 8 },
+  { food_name: "ヤブカンゾウ", category_id: 1, start_week: 8, end_week: 14, most_product_week: 10, is_rare: true, image: "https://syonai-hakusan.cocolog-nifty.com/photos/uncategorized/2009/04/10/h_030.jpg", recommend_week: 8 }
 ]
 
-foods.each do |food|
-  # 重複チェックして作成
-  Food.find_or_create_by(food_name: food[:food_name]) do |f|
-    f.attributes = food
-  end
-end
+# foods.each do |food|
+  # # 重複チェックして作成
+  # Food.find_or_create_by(food_name: food[:food_name]) do |f|
+  #   f.attributes = food
+  # end
+# end
+  Food.upsert_all(foods)

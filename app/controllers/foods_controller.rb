@@ -9,8 +9,12 @@ class FoodsController < ApplicationController
     input_date = Date.parse(params[:date])
     week_number = input_date.cweek #cweekはISO形式の週番号(1~53)
     @foods = Food.where("start_week <= ? AND end_week >= ?", week_number, week_number)
-    # 検索結果をセッションに一時的に保存する
-    session[:foods] = @foods.to_a # to_aはActiveRecord::Relationを配列に変換します
+    
+    # 検索結果のIDをデータベースに一時保存
+    search_session = SearchSession.create!(foods_ids: @foods.pluck(:id).to_json)
+  
+    # セッションに保存するのは、作成したレコードのIDのみ
+    session[:search_session_id] = search_session.id
 
     # 新しいルートにリダイレクト
     redirect_to results_path
@@ -18,13 +22,24 @@ class FoodsController < ApplicationController
 
   # GET /foods or /foods.json
   def results
-    # searchアクションで保存した検索結果を取得
-    @foods = Food.where(id: session[:foods].map(&:id))
-    # セッションからデータを削除する
-    session.delete(:foods)
-
-    # このアクションに対応するビューが表示される
-    # app/views/foods/results.html.erb
+    # セッションに保存したIDを使ってデータベースから検索結果を取得
+    if session[:search_session_id]
+      search_session = SearchSession.find_by(id: session[:search_session_id])
+      if search_session
+        food_ids = JSON.parse(search_session.foods_ids)
+        @foods = Food.where(id: food_ids)
+        
+        # 一度表示したらデータベースから一時データを削除
+        search_session.destroy
+      else
+        @foods = []
+      end
+      
+      # セッションからIDを削除
+      session.delete(:search_session_id)
+    else
+      @foods = []
+    end
   end
 
   # GET /foods or /foods.json
