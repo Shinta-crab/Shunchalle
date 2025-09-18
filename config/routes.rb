@@ -13,4 +13,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "static_pages#top"
+  post "search", to: "foods#search"
+  get "results", to: "foods#results"
 end

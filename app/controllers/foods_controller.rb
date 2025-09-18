@@ -1,18 +1,37 @@
 class FoodsController < ApplicationController
   before_action :set_food, only: %i[ show edit update destroy ]
 
-  # GET /foods or /foods.json
-  def index
-    @foods = Food.all
+  # GET /foods/new
+  def new; end
+
+  # POST /foods/search 旬の食材を検索
+  def search
+    input_date = Date.parse(params[:date])
+    week_number = input_date.cweek #cweekはISO形式の週番号(1~53)
+    @foods = Food.where("start_week <= ? AND end_week >= ?", week_number, week_number)
+    # 検索結果をセッションに一時的に保存する
+    session[:foods] = @foods.to_a # to_aはActiveRecord::Relationを配列に変換します
+
+    # 新しいルートにリダイレクト
+    redirect_to results_path
   end
+
+  # GET /foods or /foods.json
+  def results
+    # searchアクションで保存した検索結果を取得
+    @foods = Food.where(id: session[:foods].map(&:id))
+    # セッションからデータを削除する
+    session.delete(:foods)
+
+    # このアクションに対応するビューが表示される
+    # app/views/foods/results.html.erb
+  end
+
+  # GET /foods or /foods.json
+  def index; end
 
   # GET /foods/1 or /foods/1.json
   def show
-  end
-
-  # GET /foods/new
-  def new
-    @food = Food.new
   end
 
   # GET /foods/1/edit

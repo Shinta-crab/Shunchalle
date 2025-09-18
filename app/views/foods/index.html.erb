@@ -1,16 +1,13 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "旬食材探し" %>
 
-<% content_for :title, "Foods" %>
-
-<h1>Foods</h1>
-
-<div id="foods">
-  <% @foods.each do |food| %>
-    <%= render food %>
-    <p>
-      <%= link_to "Show this food", food %>
-    </p>
-  <% end %>
+<div class="min-h-screen bg-cover bg-center" style="background-image: url(<%= asset_path('top-wid.png') %>)">
+  <div class="flex flex-col justify-center items-center">
+    <div class="m-100 md:w-10/12 lg:w-8/12 mx-auto">
+      <p class="text-xl mb-3 text-center">その日の旬な食材を探します。</p>
+      <%= form_with url: search_path, method: :post, local: true, class: "space-x-4" do |f| %>
+        <%= f.date_field :date, class: "border p-2 rounded" %>
+        <%= f.submit 'この日に買い物する', class: "bg-amber-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" %>
+      <% end %>
+    </div>
+  </div>
 </div>
-
-<%= link_to "New food", new_food_path %>

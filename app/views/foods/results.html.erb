@@ -1,0 +1,16 @@
+<div class="min-h-screen bg-cover bg-center" style="background-image: url(<%= asset_path('top-wid.png') %>)">
+  <div class="mt-10 max-w-2xl mx-auto">
+    <h2 class="text-2xl font-bold mb-4">旬の食材リスト</h2>
+    <% if @foods.any? %>
+      <ul class="space-y-2">
+        <% @foods.each do |food| %>
+          <li class="p-4 border rounded shadow">
+            <%= food.food_name %>（カテゴリ: <%= food.category.category_name %>）
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-gray-500">この週に旬の食材は見つかりませんでした。</p>
+    <% end %>
+  </div>
+</div>
