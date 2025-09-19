@@ -26,29 +26,28 @@ class FoodsController < ApplicationController
   # GET /foods or /foods.json
   def results
     # セッションに保存したIDを使ってデータベースから検索結果を取得
-    if session[:search_session_id]
-      search_session = SearchSession.find_by(id: session[:search_session_id])
-      if search_session
-        food_ids = JSON.parse(search_session.foods_ids)
-        @foods = Food.where(id: food_ids)
+    search_session = SearchSession.find_by(id: session[:search_session_id])
+    search_week = session[:search_week]
+    
+    # セッション保存した検索結果があり、かつ検索した週が存在する場合
+    if search_session && search_week
+      food_ids = JSON.parse(search_session.foods_ids)
+      @foods = Food.where(id: food_ids).includes(:recipes)
 
-        # 珍旬食材を検索
-        # is_rareがtrueで、かつrecommend_weekが検索された週と一致する食材を1つ取得
-        search_week = session[:search_week]
-        @rare_food = @foods.find_by(is_rare: true, recommend_week: search_week)
-        
-        # 一度表示したらデータベースから一時データを削除
-        search_session.destroy
-      else
-        @foods = []
-      end
-      
-      # セッションからIDを削除
-      session.delete(:search_session_id)
-      session.delete(:search_week) # セッションから週を削除
+      # 珍旬食材を検索＋レシピデータ取得
+      # is_rareがtrueで、かつrecommend_weekが検索された週と一致する食材を1つ取得
+      @rare_food = @foods.find_by(is_rare: true, recommend_week: search_week)
+      @rare_food_recipe = @rare_food.recipes.first if @rare_food
+
+      # 一度表示したらデータベースから一時データを削除
+      search_session.destroy
     else
       @foods = []
     end
+      
+    # セッションからIDを削除
+    session.delete(:search_session_id)
+    session.delete(:search_week) # セッションから週を削除
   end
 
   # GET /foods or /foods.json

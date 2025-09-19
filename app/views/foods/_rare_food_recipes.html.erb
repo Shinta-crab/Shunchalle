@@ -1,0 +1,14 @@
+<div class="w-1/2 p-4 text-center">
+  <% if rare_food_recipe %>
+    <p class="font-semibold mb-2">おすすめレシピ</p>
+    <%= link_to rare_food_recipe.body, target: '_blank' do %>
+      <%= image_tag rare_food_recipe.recipe_image, alt: rare_food_recipe.recipe_title, class: "w-full h-auto object-cover rounded-md object-scale-down" %>
+    <% end %>
+    <p class="mt-2"><%= link_to rare_food_recipe.recipe_title, food_recipe_path(@rare_food, rare_food_recipe) %></p>
+  <% else %>
+    <p class="font-semibold mb-2">おすすめレシピ</p>
+    <div class="bg-gray-300 h-48 flex items-center justify-center">
+      <p class="text-gray-500">レシピは見つかりませんでした</p>
+    </div>
+  <% end %>
+</div>
