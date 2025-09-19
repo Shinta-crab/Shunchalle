@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: Shunchalle
+    # ... その他の設定（buildCommand, startCommandなど）
+    # デプロイ後に`rails db:seed`を実行するコマンドを追加
+    # build.shスクリプトを呼び出して複数コマンドを実行
+    buildCommand: "./bin/render-build.sh"
+    # ....
