@@ -8,6 +8,9 @@ class FoodsController < ApplicationController
   def search
     input_date = Date.parse(params[:date])
     week_number = input_date.cweek #cweekはISO形式の週番号(1~53)
+
+    session[:search_week] = week_number # 検索された週をセッションに保存
+
     @foods = Food.where("start_week <= ? AND end_week >= ?", week_number, week_number)
     
     # 検索結果のIDをデータベースに一時保存
@@ -28,6 +31,11 @@ class FoodsController < ApplicationController
       if search_session
         food_ids = JSON.parse(search_session.foods_ids)
         @foods = Food.where(id: food_ids)
+
+        # 珍旬食材を検索
+        # is_rareがtrueで、かつrecommend_weekが検索された週と一致する食材を1つ取得
+        search_week = session[:search_week]
+        @rare_food = @foods.find_by(is_rare: true, recommend_week: search_week)
         
         # 一度表示したらデータベースから一時データを削除
         search_session.destroy
@@ -37,6 +45,7 @@ class FoodsController < ApplicationController
       
       # セッションからIDを削除
       session.delete(:search_session_id)
+      session.delete(:search_week) # セッションから週を削除
     else
       @foods = []
     end
