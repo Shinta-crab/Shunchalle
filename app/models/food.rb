@@ -5,4 +5,5 @@ class Food < ApplicationRecord
   validates :is_rare, presence: true
 
   belongs_to :category
+  has_many :recipes, dependent: :destroy
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_18_133413) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_19_133341) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,6 +19,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_18_133413) do
     t.string "icon"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["category_name"], name: "index_categories_on_category_name", unique: true
   end
 
   create_table "foods", force: :cascade do |t|
@@ -33,12 +34,24 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_18_133413) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_foods_on_category_id"
+    t.index ["food_name"], name: "index_foods_on_food_name", unique: true
   end
 
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "recipes", force: :cascade do |t|
+    t.bigint "food_id"
+    t.string "recipe_title", null: false
+    t.string "body", null: false
+    t.string "recipe_image", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["food_id"], name: "index_recipes_on_food_id"
+    t.index ["recipe_title"], name: "index_recipes_on_recipe_title", unique: true
   end
 
   create_table "search_sessions", force: :cascade do |t|
@@ -48,4 +61,5 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_18_133413) do
   end
 
   add_foreign_key "foods", "categories"
+  add_foreign_key "recipes", "foods"
 end
