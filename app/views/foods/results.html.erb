@@ -1,0 +1,27 @@
+<% content_for :title, "旬食材検索結果" %>
+
+<div class="min-h-screen bg-cover bg-center" style="background-image: url(<%= asset_path('top-wid.png') %>)">
+  <div class="bg-amber-100 py-4 mt-10 max-w-2xl mx-auto rounded-3xl">
+    <h2 class="text-2xl font-bold mb-4 text-center">あなたにおすすめの旬食材は</h2>
+    
+    <div class="flex bg-white p-4 mx-4 rounded-xl shadow-md overflow-x-auto">
+      <%= render "rare_food_image" %>
+      <%= render "rare_food_recipes", rare_food_recipe: @rare_food_recipe %>
+    </div>
+    
+    <p class="text-xl font-bold text-center mt-8 mb-2">その時期の旬はこれ！</p>
+    <p class="text-center text-xl">↓↓↓↓↓↓↓↓</p>
+    
+    <div class="bg-white p-4 mx-4 rounded-xl shadow-md overflow-x-auto">
+      <% if @foods.any? %>
+        <%= render "food_results" %>
+      <% else %>
+        <p class="text-gray-500 text-center">この週に旬の食材は見つかりませんでした。</p>
+      <% end %>
+    </div>
+    
+    <div class="text-center mt-6">
+      <%= link_to "別日に買い物する", new_food_path, class: "bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-6 rounded-full shadow-lg" %>
+    </div>
+  </div>
+</div>

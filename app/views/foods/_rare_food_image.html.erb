@@ -1,0 +1,12 @@
+<div class="w-1/2 p-4 text-center">
+  <% if @rare_food %>
+    <p class="text-lg font-bold"><%= @rare_food.food_name %></p>
+    <div class="h-48 flex justify-center items-center">
+      <%= image_tag @rare_food.image, alt: @rare_food.food_name, class: "h-full object-cover" %>
+    </div>
+  <% else %>
+    <div class="bg-gray-300 h-48 flex justify-center items-center">
+      <span class="text-gray-600">この週の珍旬食材はありません。</span>
+    </div>
+  <% end %>
+</div>
