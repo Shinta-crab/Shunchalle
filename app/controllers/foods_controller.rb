@@ -11,12 +11,11 @@ class FoodsController < ApplicationController
 
     session[:search_week] = week_number # 検索された週をセッションに保存
 
-    @foods = Food.where("start_week <= ? AND end_week >= ?", week_number, week_number)
+    @foods = Food.where("(start_week <= end_week AND start_week <= :week AND :week <= end_week)
+      OR (start_week > end_week AND (:week >= start_week OR :week <= end_week))", week: week_number)
     
     # 検索結果のIDをデータベースに一時保存
     search_session = SearchSession.create!(foods_ids: @foods.pluck(:id).to_json)
-  
-    # セッションに保存するのは、作成したレコードのIDのみ
     session[:search_session_id] = search_session.id
 
     # 新しいルートにリダイレクト
