@@ -2,6 +2,7 @@
 import "@hotwired/turbo-rails"
 import "./controllers"
 
+// h1 + p とボタンのフェードイン
 document.addEventListener("turbo:load", () => {
   const section = document.querySelector(".fade-section");
   const button = document.querySelector(".fade-button");
@@ -18,6 +19,7 @@ document.addEventListener("turbo:load", () => {
         setTimeout(() => {
           button.classList.remove("opacity-0", "scale-90");
         }, 1000); // 1秒遅れ
+
         observer.unobserve(section);
       }
     });
@@ -26,12 +28,15 @@ document.addEventListener("turbo:load", () => {
   observer.observe(section);
 });
 
+// 紅葉を舞わせる処理
 document.addEventListener("turbo:load", () => {
   const container = document.body;
 
   function createFallingLeaf() {
     const leaf = document.createElement("img");
-    leaf.src = "/assets/momiji.png"; // app/assets/images/momiji.png
+
+    // ✅ asset_path で渡した URL を使用
+    leaf.src = window.momijiAsset;
     leaf.classList.add("fixed", "top-0", "z-50", "pointer-events-none");
 
     // ランダム位置・サイズ
