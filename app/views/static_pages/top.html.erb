@@ -1,10 +1,10 @@
 <div class="min-h-screen bg-cover bg-center" style="background-image: url(<%= asset_path('top-wid.png') %>)">
   <div class="flex flex-col justify-center items-center">
-    <div class="m-100 md:w-10/12 lg:w-8/12 mx-auto">
-      <h1 class="text-6xl text-orange-500 font-extrabold mb-3 text-center">旬チャレ</h1>
-      <p class="text-xl mb-3 text-center">その日の旬を味わいません？</p>
-      <div class="flex justify-center">
-      <%= link_to '旬な食材を知る', new_food_path, class: "bg-amber-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" %>
+    <div class="m-100 md:w-10/12 lg:w-8/12 mx-auto text-center fade-section opacity-0 transition-opacity duration-1000 ease-in">
+      <h1 class="text-6xl text-orange-500 font-extrabold mb-3">旬チャレ</h1>
+      <p class="text-xl mb-3">旬を取り入れよう！</p>
+      <div class="fade-button opacity-0 scale-90 transition-all duration-500 ease-out">
+        <%= link_to '旬な食材を知る', new_food_path, class: "bg-amber-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" %>
       </div>
     </div>
   </div>
