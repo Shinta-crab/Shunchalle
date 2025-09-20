@@ -54,13 +54,13 @@ foods = [
   { food_name: "トマト", category_id: 1, start_week: 22, end_week: 34, most_product_week: 28, is_rare: false, image: "", recommend_week: nil },
   { food_name: "ナス", category_id: 1, start_week: 22, end_week: 32, most_product_week: 28, is_rare: false, image: "", recommend_week: nil },
   { food_name: "キュウリ", category_id: 1, start_week: 22, end_week: 32, most_product_week: 28, is_rare: false, image: "", recommend_week: nil },
-  { food_name: "ピーマン", category_id: 1, start_week: 22, end_week: 34, most_product_week: 28, is_rare: false, image: "", recommend_week: nil },
-  { food_name: "オクラ", category_id: 1, start_week: 24, end_week: 34, most_product_week: 30, is_rare: false, image: "", recommend_week: nil },
+  { food_name: "ピーマン", category_id: 1, start_week: 22, end_week: 38, most_product_week: 28, is_rare: false, image: "", recommend_week: nil },
+  { food_name: "オクラ", category_id: 1, start_week: 24, end_week: 35, most_product_week: 30, is_rare: false, image: "", recommend_week: nil },
   { food_name: "モロヘイヤ", category_id: 1, start_week: 26, end_week: 34, most_product_week: 30, is_rare: false, image: "", recommend_week: nil },
-  { food_name: "枝豆", category_id: 1, start_week: 28, end_week: 34, most_product_week: 32, is_rare: false, image: "", recommend_week: nil },
+  { food_name: "枝豆", category_id: 1, start_week: 28, end_week: 40, most_product_week: 32, is_rare: false, image: "", recommend_week: nil },
   { food_name: "スイカ", category_id: 1, start_week: 28, end_week: 34, most_product_week: 32, is_rare: false, image: "", recommend_week: nil },
   { food_name: "メロン", category_id: 1, start_week: 28, end_week: 34, most_product_week: 32, is_rare: false, image: "", recommend_week: nil },
-  { food_name: "トウモロコシ", category_id: 1, start_week: 24, end_week: 32, most_product_week: 28, is_rare: false, image: "", recommend_week: nil },
+  { food_name: "トウモロコシ", category_id: 1, start_week: 24, end_week: 38, most_product_week: 28, is_rare: false, image: "", recommend_week: nil },
   { food_name: "キウイ", category_id: 3, start_week: 24, end_week: 32, most_product_week: 28, is_rare: false, image: "", recommend_week: nil },
   { food_name: "ナツメ", category_id: 1, start_week: 26, end_week: 32, most_product_week: 30, is_rare: true, image: "https://media.delishkitchen.tv/article/2529/14ae5ai80e1h.jpeg?version=1751434212", recommend_week: 26 },
   { food_name: "ハモ", category_id: 2, start_week: 26, end_week: 32, most_product_week: 30, is_rare: true, image: "https://kappo-aun.jp/wp-content/uploads/2020/06/AdobeStock_87191418-592x410.jpeg", recommend_week: 27 },
@@ -147,10 +147,14 @@ foods = [
   { food_name: "ヤブカンゾウ", category_id: 1, start_week: 8, end_week: 14, most_product_week: 10, is_rare: true, image: "https://syonai-hakusan.cocolog-nifty.com/photos/uncategorized/2009/04/10/h_030.jpg", recommend_week: 8 },
   { food_name: "ユウガオ", category_id: 1, start_week: 28, end_week: 40, most_product_week: 35, is_rare: true, image: "", recommend_week: nil },
   { food_name: "とうがらし", category_id: 1, start_week: 28, end_week: 48, most_product_week: 35, is_rare: false, image: "", recommend_week: nil },
-  { food_name: "シカクマメ", category_id: 1, start_week: 32, end_week: 48, most_product_week: 40, is_rare: true, image: "", recommend_week: nil },
+  { food_name: "シカクマメ", category_id: 1, start_week: 32, end_week: 48, most_product_week: 40, is_rare: true, image: "https://media.delishkitchen.tv/article/1196/hqtzyayri87.jpeg?version=1658286864", recommend_week: 35 },
   { food_name: "宇宙芋", category_id: 1, start_week: 40, end_week: 53, most_product_week: 48, is_rare: true, image: "https://onnanoeki.com/wp-content/uploads/2024/02/22711624_m-1024x683.jpg", recommend_week: 53 },
   { food_name: "ミミイカ", category_id: 2, start_week: 19, end_week: 27, most_product_week: 48, is_rare: true, image: "https://www.zukan-bouz.com/public_image/Fish/669/Thumb630/20210911615.jpg", recommend_week: 23 } 
 ]
+
+uchu_imo = Food.find_by(food_name: "宇宙芋")
+mimi_ika = Food.find_by(food_name: "ミミイカ")
+shikaku_mame = Food.find_by(food_name: "シカクマメ")
 
 Food.upsert_all(foods, unique_by: :food_name)
 
@@ -207,8 +211,9 @@ recipes = [
   { food_id: 133 , recipe_title: "ハスカップのフォンダンショコラ" , body: "https://cookpad.com/jp/recipes/19888197?ref=search&search_term=%E3%83%8F%E3%82%B9%E3%82%AB%E3%83%83%E3%83%97", recipe_image: "https://img-global-jp.cpcdn.com/recipes/4651459/300x426cq80/%E7%B0%A1%E5%8D%98%E3%83%95%E3%82%A9%E3%83%B3%E3%83%80%E3%83%B3%E3%82%B7%E3%83%A7%E3%82%B3%E3%83%A9-%E3%83%8F%E3%82%B9%E3%82%AB%E3%83%83%E3%83%97-%E3%83%AC%E3%82%B7%E3%83%94-%E3%83%A1%E3%82%A4%E3%83%B3-%E5%86%99%E7%9C%9F.webp" },
   { food_id: 134 , recipe_title: "行者にんにく餃子" , body: "https://cookpad.com/jp/recipes/22575029?ref=search&search_term=%E8%A1%8C%E8%80%85%E3%81%AB%E3%82%93%E3%81%AB%E3%81%8F", recipe_image: "https://img-global-jp.cpcdn.com/recipes/7814325/640x640sq80/photo.webp" },
   { food_id: 135 , recipe_title: "ヤブカンゾウのピクルス" , body: "https://cookpad.com/jp/recipes/24933719?ref=search&search_term=%E3%83%A4%E3%83%96%E3%82%AB%E3%83%B3%E3%82%BE%E3%82%A6", recipe_image: "https://img-global-jp.cpcdn.com/recipes/fa36b43a43e9562f/300x426cq80/%E8%8A%B1%E3%81%B3%E3%82%89%E3%81%AE%E3%83%91%E3%82%B9%E3%83%86%E3%83%AB%E3%83%94%E3%82%AF%E3%83%AB%E3%82%B9-%E3%83%AC%E3%82%B7%E3%83%94-%E3%83%A1%E3%82%A4%E3%83%B3-%E5%86%99%E7%9C%9F.webp" },
-  { food_id: 139 , recipe_title: "宇宙芋とひじきのサラダ" , body: "https://cookpad.com/jp/recipes/19803274?ref=search&search_term=%E5%AE%87%E5%AE%99%E8%8A%8B", recipe_image: "https://img-global-jp.cpcdn.com/recipes/3788641/300x426cq80/%E7%BE%8E%E8%82%8C%E3%83%AC%E3%82%B7%E3%83%94%E5%AE%87%E5%AE%99%E8%8A%8B%E3%81%A8%E3%81%B2%E3%81%98%E3%81%8D%E3%81%AE%E3%82%B5%E3%83%A9%E3%83%80-%E3%83%AC%E3%82%B7%E3%83%94-%E3%83%A1%E3%82%A4%E3%83%B3-%E5%86%99%E7%9C%9F.webp" },
-  { food_id: 140 , recipe_title: "ミミイカの筑前煮" , body: "https://cookpad.com/jp/recipes/17826107?ref=search&search_term=%E3%83%9F%E3%83%9F%E3%82%A4%E3%82%AB", recipe_image: "https://img-global-jp.cpcdn.com/recipes/3075664/300x426cq80/%E3%83%9F%E3%83%9F%E3%82%A4%E3%82%AB%E3%81%AE%E7%AD%91%E5%89%8D%E7%85%AE%E9%A2%A8-%E3%83%AC%E3%82%B7%E3%83%94-%E3%83%A1%E3%82%A4%E3%83%B3-%E5%86%99%E7%9C%9F.webp" }
+  { food_id: uchu_imo.id, recipe_title: "宇宙芋とひじきのサラダ" , body: "https://cookpad.com/jp/recipes/19803274?ref=search&search_term=%E5%AE%87%E5%AE%99%E8%8A%8B", recipe_image: "https://img-global-jp.cpcdn.com/recipes/3788641/300x426cq80/%E7%BE%8E%E8%82%8C%E3%83%AC%E3%82%B7%E3%83%94%E5%AE%87%E5%AE%99%E8%8A%8B%E3%81%A8%E3%81%B2%E3%81%98%E3%81%8D%E3%81%AE%E3%82%B5%E3%83%A9%E3%83%80-%E3%83%AC%E3%82%B7%E3%83%94-%E3%83%A1%E3%82%A4%E3%83%B3-%E5%86%99%E7%9C%9F.webp" },
+  { food_id: mimi_ika.id, recipe_title: "ミミイカの筑前煮" , body: "https://cookpad.com/jp/recipes/17826107?ref=search&search_term=%E3%83%9F%E3%83%9F%E3%82%A4%E3%82%AB", recipe_image: "https://img-global-jp.cpcdn.com/recipes/3075664/300x426cq80/%E3%83%9F%E3%83%9F%E3%82%A4%E3%82%AB%E3%81%AE%E7%AD%91%E5%89%8D%E7%85%AE%E9%A2%A8-%E3%83%AC%E3%82%B7%E3%83%94-%E3%83%A1%E3%82%A4%E3%83%B3-%E5%86%99%E7%9C%9F.webp" },
+  { food_id: shikaku_mame.id, recipe_title: "えのきとシカクマメの胡麻和え" , body: "https://snapdish.jp/d/4aHGPa", recipe_image: "https://cdn.snapdish.co/photo/dish/5c060343e77989269d2e13f2/resize/960.webp" }
 ]
 
 Recipe.upsert_all(recipes, unique_by: :recipe_title)
