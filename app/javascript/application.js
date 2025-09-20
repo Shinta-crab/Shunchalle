@@ -25,3 +25,33 @@ document.addEventListener("turbo:load", () => {
 
   observer.observe(section);
 });
+
+document.addEventListener("turbo:load", () => {
+  const container = document.body;
+
+  function createFallingLeaf() {
+    const leaf = document.createElement("img");
+    leaf.src = "/assets/momiji.png"; // app/assets/images/momiji.png
+    leaf.classList.add("fixed", "top-0", "z-50", "pointer-events-none");
+
+    // ランダム位置・サイズ
+    const size = Math.random() * 40 + 20; // 20px〜60px
+    const left = Math.random() * window.innerWidth;
+    leaf.style.width = `${size}px`;
+    leaf.style.left = `${left}px`;
+
+    // アニメーション用のスタイル
+    const duration = Math.random() * 5 + 5; // 5〜10秒で落ちる
+    leaf.style.animation = `fall ${duration}s linear forwards`;
+
+    container.appendChild(leaf);
+
+    // アニメーション終了後に削除
+    setTimeout(() => {
+      leaf.remove();
+    }, duration * 1000);
+  }
+
+  // 一定間隔で紅葉を生成
+  setInterval(createFallingLeaf, 800); // 0.8秒ごとに1枚
+});
