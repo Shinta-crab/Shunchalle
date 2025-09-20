@@ -4,6 +4,7 @@
     <title><%= content_for(:title) || "Myapp" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="momiji-path" content="<%= asset_path('momiji.png') %>">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -17,9 +18,9 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body>
-    <% render 'shared/header'%>
-    <%= yield %>
-    <%= render 'shared/footer' %>
-  </body>
+ <body data-controller="<%= controller.controller_name %>" data-action="<%= controller.action_name %>">
+  <%= render 'shared/header'%>
+  <%= yield %>
+  <%= render 'shared/footer' %>
+</body>
 </html>

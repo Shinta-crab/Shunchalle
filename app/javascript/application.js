@@ -2,61 +2,55 @@
 import "@hotwired/turbo-rails"
 import "./controllers"
 
-// h1 + p とボタンのフェードイン
 document.addEventListener("turbo:load", () => {
-  const section = document.querySelector(".fade-section");
-  const button = document.querySelector(".fade-button");
+  const body = document.body;
+  const controller = body.dataset.controller;
+  const action = body.dataset.action;
 
-  if (!section || !button) return;
+  if (controller === "static_pages" && action === "top") {
+    // ===== フェードイン処理 =====
+    const section = document.querySelector(".fade-section");
+    const button = document.querySelector(".fade-button");
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        // h1 + p をフェードイン
-        section.classList.remove("opacity-0");
+    if (section && button) {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            section.classList.remove("opacity-0"); // h1 + p をフェードイン
+            setTimeout(() => {
+              button.classList.remove("opacity-0", "scale-90"); // ボタンをパッと表示
+            }, 1000);
+            observer.unobserve(section);
+          }
+        });
+      });
+      observer.observe(section);
+    }
 
-        // 少し遅れてボタンを「パッと」表示
-        setTimeout(() => {
-          button.classList.remove("opacity-0", "scale-90");
-        }, 1000); // 1秒遅れ
+    // ===== 紅葉アニメーション処理 =====
+    const leavesContainer = document.createElement("div");
+    leavesContainer.classList.add("leaves-container");
+    document.body.appendChild(leavesContainer);
 
-        observer.unobserve(section);
-      }
-    });
-  });
+    function createLeaf() {
+      const leaf = document.createElement("img");
+      leaf.src = window.momijiAsset; // ERBから渡したパスを利用
+      leaf.classList.add("animate-fall", "fixed", "top-0", "z-50", "pointer-events-none");
 
-  observer.observe(section);
-});
+      // ランダムな位置・サイズ・速度
+      leaf.style.left = `${Math.random() * 100}vw`;
+      leaf.style.width = `${20 + Math.random() * 40}px`;
+      leaf.style.animationDuration = `${5 + Math.random() * 5}s`;
 
-// 紅葉を舞わせる処理
-document.addEventListener("turbo:load", () => {
-  const container = document.body;
+      leavesContainer.appendChild(leaf);
 
-  function createFallingLeaf() {
-    const leaf = document.createElement("img");
+      // アニメーション終了後に削除
+      setTimeout(() => {
+        leaf.remove();
+      }, 10000);
+    }
 
-    // ✅ asset_path で渡した URL を使用
-    leaf.src = window.momijiAsset;
-    leaf.classList.add("fixed", "top-0", "z-50", "pointer-events-none");
-
-    // ランダム位置・サイズ
-    const size = Math.random() * 40 + 20; // 20px〜60px
-    const left = Math.random() * window.innerWidth;
-    leaf.style.width = `${size}px`;
-    leaf.style.left = `${left}px`;
-
-    // アニメーション用のスタイル
-    const duration = Math.random() * 5 + 5; // 5〜10秒で落ちる
-    leaf.style.animation = `fall ${duration}s linear forwards`;
-
-    container.appendChild(leaf);
-
-    // アニメーション終了後に削除
-    setTimeout(() => {
-      leaf.remove();
-    }, duration * 1000);
+    // 一定間隔で紅葉を生成
+    setInterval(createLeaf, 800);  // 0.8秒ごとに1枚
   }
-
-  // 一定間隔で紅葉を生成
-  setInterval(createFallingLeaf, 800); // 0.8秒ごとに1枚
 });
